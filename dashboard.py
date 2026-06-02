@@ -418,7 +418,7 @@ st.plotly_chart(fig7, use_container_width=True)
 st.markdown("---")
 
 # ══════════════════════════════════════════════════════════════════
-# SECCIÓN 6 — FNCER (si el archivo existe)
+# SECCIÓN 6 — FNCER
 # ══════════════════════════════════════════════════════════════════
 if fncer is not None:
     st.subheader("🌞 Proyectos FNCER — Capacidad Renovable por Departamento")
