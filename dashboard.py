@@ -105,7 +105,7 @@ COLORES = {
 # SIDEBAR
 # ══════════════════════════════════════════════════════════════════
 with st.sidebar:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Simple_lightning_bolt.svg/100px-Simple_lightning_bolt.svg.png", width=50)
+    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Lightning_Bolt_on_Circle.svg/960px-Lightning_Bolt_on_Circle.svg.png", width=50)
     st.title("⚡ Panel de Control")
     st.markdown("---")
 
