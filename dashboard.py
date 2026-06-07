@@ -106,7 +106,7 @@ COLORES = {
 # ══════════════════════════════════════════════════════════════════
 with st.sidebar:
     st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Lightning_Bolt_on_Circle.svg/960px-Lightning_Bolt_on_Circle.svg.png", width=50)
-    st.title("⚡ Panel de Control")
+    st.title("Panel de Control")
     st.markdown("---")
 
     # Filtro de años
