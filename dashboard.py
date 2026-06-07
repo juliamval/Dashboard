@@ -64,8 +64,11 @@ COLORES = {
 # ══════════════════════════════════════════════════════════════════
 @st.cache_data
 def cargar_datos():
+    # Leer el archivo SIN forzar nombres todavía
     df = pd.read_excel('Variables_V2.xlsx', sheet_name='Hoja1', header=2)
-    df.columns = [
+
+    # Nombres esperados de las primeras 16 columnas
+    nombres_esperados = [
         'fecha', 'gen_hidro_gwh', 'gen_fosil_gwh',
         'disp_hidro', 'disp_termica',
         'reserva_decimal', 'cap_util_gwh', 'vol_util_gwh',
@@ -73,26 +76,37 @@ def cargar_datos():
         'precio_carbon_usd', 'precio_gas_usd',
         'oferta_carbon_cop', 'oferta_gas_cop',
         'oni', 'precio_bolsa_cop'
-    ] + [f'_drop{i}' for i in range(50)]
+    ]
 
-    cols = ['fecha','gen_hidro_gwh','gen_fosil_gwh','disp_hidro',
-            'disp_termica','reserva_decimal','cap_util_gwh',
-            'demanda_gwh','trm','precio_carbon_usd','precio_gas_usd',
-            'oferta_carbon_cop','oferta_gas_cop','oni','precio_bolsa_cop']
+    # Asignar nombres adaptándose al número real de columnas
+    n_cols = df.shape[1]
+    if n_cols >= 16:
+        # Caso normal: 16 o más columnas
+        df.columns = nombres_esperados + [f'_drop{i}' for i in range(n_cols - 16)]
+    else:
+        # Caso reducido: menos de 16 columnas
+        df.columns = nombres_esperados[:n_cols]
+
+    # Mantener solo las 16 columnas útiles que existan
+    cols = [c for c in nombres_esperados if c in df.columns]
     df = df[cols].copy()
+
+    # Filtrar fechas válidas
     df = df[pd.to_datetime(df['fecha'], errors='coerce').notna()]
     df['fecha'] = pd.to_datetime(df['fecha']).dt.to_period('M').dt.to_timestamp()
 
+    # Convertir a numérico e interpolar
     for col in cols[1:]:
         df[col] = pd.to_numeric(df[col], errors='coerce')
     df = df.interpolate(method='linear').reset_index(drop=True)
 
-    df['reserva_pct']      = df['reserva_decimal'] * 100
-    df['part_hidro_pct']   = df['gen_hidro_gwh'] / (df['gen_hidro_gwh'] + df['gen_fosil_gwh']) * 100
-    df['costo_termico_cop']= df['precio_carbon_usd'] * df['trm']
-    df['anio']             = df['fecha'].dt.year
-    df['mes']              = df['fecha'].dt.month
-    df['evento_climatico'] = 'Neutro'
+    # Variables derivadas
+    df['reserva_pct']       = df['reserva_decimal'] * 100
+    df['part_hidro_pct']    = df['gen_hidro_gwh'] / (df['gen_hidro_gwh'] + df['gen_fosil_gwh']) * 100
+    df['costo_termico_cop'] = df['precio_carbon_usd'] * df['trm']
+    df['anio']              = df['fecha'].dt.year
+    df['mes']               = df['fecha'].dt.month
+    df['evento_climatico']  = 'Neutro'
     df.loc[df['oni'] >= 0.5,  'evento_climatico'] = 'El Niño'
     df.loc[df['oni'] <= -0.5, 'evento_climatico'] = 'La Niña'
 
