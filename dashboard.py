@@ -136,8 +136,8 @@ with st.sidebar:
 
 # Filtrar datos
 mask = (
-    (df['anio'] >= [0]) &
-    (df['anio'] <= [1]) &
+    (df['anio'] >= rango_anios[0]) &
+    (df['anio'] <= rango_anios[1]) &
     (df['evento_climatico'].isin(eventos))
 )
 df_f = df[mask].copy()
@@ -633,8 +633,8 @@ if emb_mensual is not None:
 
         for reg in regiones:
             sub = df_modelo[
-               (df_modelo['fecha'] >= pd.to_datetime(f'{[0]}-01-01')) &
-                (df_modelo['fecha'] <= pd.to_datetime(f'{[1]}-12-31'))
+                (df_modelo['fecha'] >= pd.to_datetime(f'{rango_anios[0]}-01-01')) &
+                (df_modelo['fecha'] <= pd.to_datetime(f'{rango_anios[1]}-12-31'))
             ]
             fig_r1.add_trace(go.Scatter(
                 x=sub['fecha'], y=sub[reg],
@@ -719,7 +719,7 @@ if emb_mensual is not None:
         st.dataframe(tabla_vuln, use_container_width=True, hide_index=True)
 
 else:
-    st.info("⚠️ Archivo Embalse.xlsx no encontrado.")
+    st.info("⚠️ Archivo Embalse.xlsx no encontrado. Colócalo en la misma carpeta que dashboard.py")
 
 st.markdown("---")
 
