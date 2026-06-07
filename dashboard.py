@@ -111,7 +111,7 @@ with st.sidebar:
 
     # Filtro de años
     anio_min, anio_max = int(df['anio'].min()), int(df['anio'].max())
-     = st.slider(
+     rango_anios = st.slider(
         "Período de análisis",
         min_value=anio_min,
         max_value=anio_max,
