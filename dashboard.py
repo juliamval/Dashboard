@@ -111,7 +111,7 @@ with st.sidebar:
 
     # Filtro de años
     anio_min, anio_max = int(df['anio'].min()), int(df['anio'].max())
-    rango_anios = st.slider(
+     = st.slider(
         "Período de análisis",
         min_value=anio_min,
         max_value=anio_max,
@@ -136,8 +136,8 @@ with st.sidebar:
 
 # Filtrar datos
 mask = (
-    (df['anio'] >= rango_anios[0]) &
-    (df['anio'] <= rango_anios[1]) &
+    (df['anio'] >= [0]) &
+    (df['anio'] <= [1]) &
     (df['evento_climatico'].isin(eventos))
 )
 df_f = df[mask].copy()
@@ -633,8 +633,8 @@ if emb_mensual is not None:
 
         for reg in regiones:
             sub = df_modelo[
-                (df_modelo['fecha'] >= pd.to_datetime(f'{rango_anios[0]}-01-01')) &
-                (df_modelo['fecha'] <= pd.to_datetime(f'{rango_anios[1]}-12-31'))
+                (df_modelo['fecha'] >= pd.to_datetime(f'2000-01-01')) &
+                (df_modelo['fecha'] <= pd.to_datetime(f'2025-12-31'))
             ]
             fig_r1.add_trace(go.Scatter(
                 x=sub['fecha'], y=sub[reg],
