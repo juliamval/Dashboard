@@ -132,7 +132,7 @@ with st.sidebar:
     st.markdown("💰 World Bank")
     st.markdown("🏦 Banco de la República")
     st.markdown("---")
-    st.caption("Proyecto Final — Bootcamp TIC\nTalento Tech 2026")
+    st.caption("Proyecto Final — Bootcamp Talento Tech 2026")
 
 # Filtrar datos
 mask = (
@@ -632,10 +632,7 @@ if emb_mensual is not None:
                 en_nino = False
 
         for reg in regiones:
-            sub = df_modelo[
-                (df_modelo['fecha'] >= pd.to_datetime(f'{rango_anios[0]}-01-01')) &
-                (df_modelo['fecha'] <= pd.to_datetime(f'{rango_anios[1]}-12-31'))
-            ]
+            sub = df_modelo.copy()
             fig_r1.add_trace(go.Scatter(
                 x=sub['fecha'], y=sub[reg],
                 name=reg.title(), mode='lines',
@@ -719,7 +716,7 @@ if emb_mensual is not None:
         st.dataframe(tabla_vuln, use_container_width=True, hide_index=True)
 
 else:
-    st.info("⚠️ Archivo Embalse.xlsx no encontrado. Colócalo en la misma carpeta que dashboard.py")
+    st.info("⚠️ Archivo Embalse.xlsx no encontrado.")
 
 st.markdown("---")
 
