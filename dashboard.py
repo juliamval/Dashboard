@@ -633,8 +633,8 @@ if emb_mensual is not None:
 
         for reg in regiones:
             sub = df_modelo[
-                (df_modelo['fecha'] >= pd.to_datetime('2000-01-01')) &
-                (df_modelo['fecha'] <= pd.to_datetime('2025-12-31'))
+               (df_modelo['fecha'] >= pd.to_datetime(f'{[0]}-01-01')) &
+                (df_modelo['fecha'] <= pd.to_datetime(f'{[1]}-12-31'))
             ]
             fig_r1.add_trace(go.Scatter(
                 x=sub['fecha'], y=sub[reg],
