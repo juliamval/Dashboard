@@ -719,7 +719,7 @@ if emb_mensual is not None:
         st.dataframe(tabla_vuln, use_container_width=True, hide_index=True)
 
 else:
-    st.info("⚠️ Archivo Embalse.xlsx no encontrado. Colócalo en la misma carpeta que dashboard.py")
+    st.info("⚠️ Archivo Embalse.xlsx no encontrado.")
 
 st.markdown("---")
 
